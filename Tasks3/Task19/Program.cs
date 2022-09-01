@@ -1,41 +1,46 @@
-﻿// Напишите программу, которая принимает на вход пятизначное число и проверяет, является ли оно палиндромом.
-/* 14212 -> нет
-   12821 -> да*/
+﻿// Напишите программу, которая принимает на вход координаты двух точек 
+// и находит расстояние между ними в 3D пространстве.
+// A (3,6,8); B (2,1,-7), -> 15.84
 
-string ReadStr (string UImsg)
+int ReadInt (string UImsg)
 {
-   Console.Write (UImsg);
-   return Console.ReadLine();
-}
-
-bool Palindrome5DCheck (string input)
-{
-   return input[0] == input[4] && input[1] == input[3];
+    Console.Write (UImsg);
+    return Convert.ToInt32(Console.ReadLine());
 }
 
-bool isIt5D (string input)
+int [] dotMe (int a, int b, int c)
 {
-   if (input.Length == 5)
-   {
-      return true;
-   }
-   else
-   { 
-      return false;
-   }
+    int[] dot = new int[3];
+    dot[0] = a;
+    dot[1] = b;
+    dot[2] = c;
+    return dot;
 }
 
-string message = ReadStr("Введите пятизначное число: ");
-while (!isIt5D(message))
+double Distance3D (int[] A, int[] B)
 {
-   message = ReadStr("Введите ПЯТИЗНАЧНОЕ число: ");
+    int lenX = A[0]-B[0];
+    int lenY = A[1]-B[1];
+    int lenZ = A[2]-B[2];
+    return Math.Sqrt(lenX*lenX+lenY*lenY+lenZ*lenZ);
 }
 
-if (!Palindrome5DCheck(message))
+string PrintDot (int[] a)
 {
-   Console.Write ($"{message} -> нет");
+    return ($"({a[0]}; {a[1]}; {a[2]})");
 }
-else
-{
-   Console.Write ($"{message} -> да");
-}
+
+int[] firstDot = new int[3];
+int[] secondDot = new int[3];
+int x1 = ReadInt("Введите Х для 1й точки: ");
+int y1 = ReadInt("Введите Y для 1й точки: ");
+int z1 = ReadInt("Введите Z для 1й точки: ");
+int x2 = ReadInt("Введите Х для 2й точки: ");
+int y2 = ReadInt("Введите Y для 2й точки: ");
+int z2 = ReadInt("Введите Z для 2й точки: ");
+
+firstDot = dotMe(x1, y1, z1);
+secondDot = dotMe(x2, y2, z2);
+
+Console.Write ("Расстояние между вашими точками");
+Console.Write ($" A{PrintDot(firstDot)} и B{PrintDot(secondDot)} равняется {Distance3D(firstDot, secondDot)}");
