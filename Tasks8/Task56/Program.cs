@@ -1,4 +1,4 @@
-﻿// Задайте двумерный массив. Напишите программу, которая упорядочит по убыванию элементы каждой строки двумерного массива.
+﻿// Задайте прямоугольный двумерный массив. Напишите программу, которая будет находить строку с наименьшей суммой элементов.
 
 void FillArray2D(int[,] array)
 {
@@ -30,43 +30,31 @@ int ReadInt(string message)
     return Convert.ToInt32(Console.ReadLine());
 }
 
-void SortDescend(int[] array1)
+int FindMaxIndex (int[] array)
 {
-    for (int i = 0; i < array1.Length - 1; i++)
+    int maxIndex=0;
+    for (int i = 0; i < array.Length; i++)
     {
-        int maxPosition = i;
-        for (int j = i + 1; j < array1.Length; j++)
-        {
-            if (array1[j] > array1[maxPosition])
-            {
-                maxPosition = j;
-            }
-        }
-        int temporary = array1[i];
-        array1[i] = array1[maxPosition];
-        array1[maxPosition] = temporary;
+        if (array[i]>array[maxIndex])
+            maxIndex = i;    
     }
-
+    return maxIndex;
 }
 
-void SortRowsDecend(int[,] array)
+int[] RowSums (int[,] array)
 {
-    int tmp = 0;
-    int[] row = new int[array.GetLength(1)];
+    int[] sums = new int [array.GetLength(0)];
+    
     for (int i = 0; i < array.GetLength(0); i++)
     {
         for (int j = 0; j < array.GetLength(1); j++)
         {
-            row[j] = array[i,j];
-        }
-        SortDescend(row);
-        for (int k = 0; k < array.GetLength(1); k++)
-        {
-            array[i,k] = row[k];
+            sums[i] += array[i,j];  
         }
     }
+    return sums;
 }
-/*------------------------MAIN-------------------------------*/
+/*---------------------MAIN------------------------------*/
 
 int rows = ReadInt("Введите количество строк: ");
 int columns = ReadInt("Введите количество столбцов: ");
@@ -74,5 +62,4 @@ int[,] array = new int[rows, columns];
 
 FillArray2D(array);
 PrintArray2D(array);
-SortRowsDecend(array);
-PrintArray2D(array);
+Console.WriteLine ($"{FindMaxIndex(RowSums(array))+1}я строка имеет наибольшую сумму.");
